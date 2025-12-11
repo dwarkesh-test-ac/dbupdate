@@ -7,7 +7,9 @@ export default async function handler(req, res) {
     // Check time
     const hour = new Date().getHours();
     const statusText = hour >= 12 ? "Evening" : "Morning";
-    
+
+    console.log("CRON TRIGGERED AT:", new Date().toISOString());
+
     const result = await client.query(
       "UPDATE active SET active=$1 WHERE id=$2",
       [statusText, 1]
@@ -22,4 +24,5 @@ export default async function handler(req, res) {
     return res.status(500).json({ error: error.message });
   }
 }
+
 
